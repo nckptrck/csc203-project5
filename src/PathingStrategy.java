@@ -38,4 +38,16 @@ public interface PathingStrategy {
                             .add(new Node(new Point(node.p.x - 1, node.p.y)))
 
                             .build();
+
+
+    static final Function<Point, Stream<Point>> CARDINAL_NEIGHBORS_POINTS =
+            p ->
+                    Stream.<Point>builder()
+
+                            .add(new Point(p.x + 1, p.y))
+                            .add(new Point(p.x, p.y + 1))
+                            .add(new Point(p.x, p.y - 1))
+                            .add(new Point(p.x - 1, p.y))
+
+                            .build();
 }
