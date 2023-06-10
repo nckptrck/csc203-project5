@@ -42,6 +42,7 @@ public abstract class Dude extends ActivityEntity implements Moveable{
                 !(world.getOccupancyCell(n.p) instanceof House) &&
                 !(world.getOccupancyCell(n.p) instanceof Obstacle) &&
                 !(world.getOccupancyCell(n.p) instanceof Plant) &&
+                !(world.getOccupancyCell(n.p) instanceof Zombie) &&
                 !(world.getOccupancyCell(n.p) instanceof Fairy) &&
                 !(world.getOccupancyCell(n.p) instanceof Dude)
                 ;

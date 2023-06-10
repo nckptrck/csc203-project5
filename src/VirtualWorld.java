@@ -69,11 +69,11 @@ public final class VirtualWorld extends PApplet {
     // Be sure to refactor this method as appropriate
     public void mousePressed() {
         Point pressed = mouseToPoint();
-        DudeNotFull newEntity = new DudeNotFull("dude not full", pressed, imageStore.getImageList("zombie"), 0.5, 0.2, WorldModel.DUDE_LIMIT);
+        Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 0.5, 0.2);
         newEntity.addEntity(world);
         newEntity.scheduleActions(scheduler, world, imageStore);
         world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZBackground")));
-        for(Point p: PathingStrategy.CARDINAL_NEIGHBORS_POINTS.apply(pressed).toList()){
+        for(Point p: PathingStrategy.NEIGHBORS_POINTS.apply(pressed).toList()){
             world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));}
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
