@@ -109,7 +109,6 @@ public class SimpleAudioPlayer
     // Method to play the audio
     public void play()
     {
-        //start the clip
         clip.start();
 
         status = "play";

@@ -301,7 +301,6 @@ public final class WorldModel {
                 }
             }
         }
-
         return nearestEntity(ofType, pos);
     }
 
