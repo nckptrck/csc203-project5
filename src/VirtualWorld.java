@@ -74,7 +74,7 @@ public final class VirtualWorld extends PApplet {
         Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 3, 0.6);
         newEntity.addEntity(world);
         newEntity.scheduleActions(scheduler, world, imageStore);
-        world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZBackground")));
+        world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZCentroid")));
         for(Point p: PathingStrategy.NEIGHBORS_POINTS.apply(pressed).toList()){
             world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));}
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
