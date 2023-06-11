@@ -35,6 +35,7 @@ public final class VirtualWorld extends PApplet {
     public WorldModel world;
     public WorldView view;
     public EventScheduler scheduler;
+    public int presses = 0;
 
     public void settings() {
         size(VIEW_WIDTH, VIEW_HEIGHT);
@@ -68,8 +69,9 @@ public final class VirtualWorld extends PApplet {
     // Just for debugging and for P5
     // Be sure to refactor this method as appropriate
     public void mousePressed() {
+        presses += 1;
         Point pressed = mouseToPoint();
-        Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 0.5, 0.2);
+        Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 3, 0.6);
         newEntity.addEntity(world);
         newEntity.scheduleActions(scheduler, world, imageStore);
         world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZBackground")));
