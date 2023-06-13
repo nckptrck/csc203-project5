@@ -1,8 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import processing.core.*;
+
+import javax.sound.sampled.*;
 
 public final class VirtualWorld extends PApplet {
     private static String[] ARGS;
@@ -43,15 +46,17 @@ public final class VirtualWorld extends PApplet {
     /*
        Processing entry point for "sketch" setup.
     */
-    public void setup() {
+    public void setup(){
         parseCommandLine(ARGS);
         loadImages(IMAGE_LIST_FILE_NAME);
         loadWorld(loadFile, this.imageStore);
+
 
         this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world, TILE_WIDTH, TILE_HEIGHT);
         this.scheduler = new EventScheduler();
         this.startTimeMillis = System.currentTimeMillis();
         this.scheduleActions(world, scheduler, imageStore);
+
     }
 
     public void draw() {
@@ -162,6 +167,20 @@ public final class VirtualWorld extends PApplet {
     public static void main(String[] args) {
         VirtualWorld.ARGS = args;
         PApplet.main(VirtualWorld.class);
+        try {
+            SimpleAudioPlayer.main(args);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("one");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("two");
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            System.out.println("three");
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public static List<String> headlessMain(String[] args, double lifetime){
@@ -170,6 +189,20 @@ public final class VirtualWorld extends PApplet {
         VirtualWorld virtualWorld = new VirtualWorld();
         virtualWorld.setup();
         virtualWorld.update(lifetime);
+
+        try {
+            SimpleAudioPlayer.main(args);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("one");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("two");
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            System.out.println("three");
+            throw new RuntimeException(e);
+        }
+
 
         return virtualWorld.world.log();
     }
