@@ -115,7 +115,7 @@ public final class WorldModel {
 
     public void parseHouse(String[] properties, Point pt, String id, ImageStore imageStore) {
         if (properties.length == HOUSE_NUM_PROPERTIES) {
-            House entity = new House(id, pt, imageStore.getImageList( HOUSE_KEY));
+            House entity = new House(id, pt, imageStore.getImageList( HOUSE_KEY), 1);
             entity.tryAddEntity(this);
         }else{
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", HOUSE_KEY, HOUSE_NUM_PROPERTIES));
