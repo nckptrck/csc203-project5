@@ -29,6 +29,19 @@ public class SimpleAudioPlayer {
         }
         System.out.println("Byeeee!");
     }
+    public static void zombie() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+        File file = new File("src/Zombiefx.wav");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
+       /* try {
+            Thread.sleep(2500);
+            clip.stop();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }*/
+    }
 }
 
 

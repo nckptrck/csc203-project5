@@ -81,6 +81,15 @@ public final class VirtualWorld extends PApplet {
         world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZCentroid")));
         for(Point p: PathingStrategy.NEIGHBORS_POINTS.apply(pressed).toList()){
             world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));}
+        try {
+            SimpleAudioPlayer.zombie();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
 
