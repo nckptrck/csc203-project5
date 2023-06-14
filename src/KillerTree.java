@@ -19,11 +19,11 @@ public class KillerTree extends ActivityEntity{
 
     @Override
     public  void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        if (ZombieAdjacent(world).isPresent()){
+        if (FairyAdjacent(world).isPresent()){
             System.out.println("HELLLOOOOOO");
-            Zombie z = ZombieAdjacent(world).get();
+            Fairy f = FairyAdjacent(world).get();
 
-            world.removeEntity(scheduler, z);
+            world.removeEntity(scheduler, f);
 
 
 
@@ -31,12 +31,12 @@ public class KillerTree extends ActivityEntity{
 
     }
 
-    public Optional<Zombie> ZombieAdjacent(WorldModel world){
+    public Optional<Fairy> FairyAdjacent(WorldModel world){
         for(Entity e: world.entities){
-            if (e instanceof Zombie){
-                Zombie z = (Zombie) e;
-                if (z.getPosition().adjacent(this.getPosition())){
-                    return Optional.of(z);
+            if (e instanceof Fairy){
+                Fairy f = (Fairy) e;
+                if (f.getPosition().adjacent(this.getPosition())){
+                    return Optional.of(f);
                 }
             }
         }
