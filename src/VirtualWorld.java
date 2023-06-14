@@ -75,12 +75,31 @@ public final class VirtualWorld extends PApplet {
     public void mousePressed() {
         presses += 1;
         Point pressed = mouseToPoint();
-        Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 3, 0.6);
+        Zombie newEntity = new Zombie("zombie", pressed, imageStore.getImageList("zombie"), 2, 0.6);
         newEntity.addEntity(world);
         newEntity.scheduleActions(scheduler, world, imageStore);
         world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZCentroid")));
         for(Point p: PathingStrategy.NEIGHBORS_POINTS.apply(pressed).toList()){
-            world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));}
+            world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));
+            if(world.isOccupied(p) ){
+                Entity e = world.getOccupant(p).get();
+                if (e instanceof Tree){
+                    Tree t = (Tree) e;
+                    world.removeEntity(scheduler, t);
+                    scheduler.unscheduleAllEvents(t);
+                    KillerTree kt = new KillerTree("killertree", p, imageStore.getImageList("killertree"), 1, 1);
+                    kt.addEntity(world);
+                    kt.scheduleActions(scheduler, world, imageStore);
+
+                }
+
+            }
+
+
+
+        }
+
+
         try {
             SimpleAudioPlayer.zombie();
         } catch (UnsupportedAudioFileException e) {

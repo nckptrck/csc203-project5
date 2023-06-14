@@ -46,6 +46,7 @@ public class DudeNotFull extends Dude implements Transformable{
 
         return false;
     }
+
     @Override
     public  void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> target = world.findNearest( this.getPosition(), new ArrayList<>(Arrays.asList(Tree.class, Sapling.class)));

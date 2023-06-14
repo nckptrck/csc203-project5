@@ -24,6 +24,7 @@ public class CrazyDude extends Dude {
 
             if (!this.getPosition().equals(nextPos)) {
                 world.moveEntity( scheduler, this, nextPos);
+
             }
             return false;
         }
@@ -40,11 +41,13 @@ public class CrazyDude extends Dude {
 
     @Override
     public void executeActivity( WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> fullTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(House.class)));
+        Optional<Entity> fullTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(Fairy.class)));
 
         if (fullTarget.isPresent() && this.moveTo( world, fullTarget.get(), scheduler)) {
-            this.transformFull(world, scheduler, imageStore);
+            world.removeEntity(scheduler,this);
+            scheduler.unscheduleAllEvents(this);
         } else {
+
             scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());
         }
     }

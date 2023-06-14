@@ -22,6 +22,7 @@ public class Zombie extends ActivityEntity implements Moveable{
     @Override
     public boolean moveTo( WorldModel world, Entity target, EventScheduler scheduler) {
         if (this.getPosition().adjacent( target.getPosition())) {
+            world.removeEntity(scheduler, target);
             return true;
         } else {
             Point nextPos = this.nextPosition(world, target.getPosition());
@@ -63,12 +64,16 @@ public class Zombie extends ActivityEntity implements Moveable{
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> zombieTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(House.class)));
+        Optional<Entity> zombieTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(DudeFull.class, DudeNotFull.class)));
 
         if (zombieTarget.isPresent()) {
             Point tgtPos = zombieTarget.get().getPosition();
 
+
             if (this.moveTo(world, zombieTarget.get(), scheduler)) {
+                CrazyDude crazydude = new CrazyDude("crazydude", tgtPos, imageStore.getImageList("crazydude"), .5,.1,0);
+                crazydude.addEntity(world);
+                crazydude.scheduleActions(scheduler, world, imageStore);
 
             }
         }

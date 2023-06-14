@@ -66,4 +66,6 @@ public abstract class Dude extends ActivityEntity implements Moveable{
 
     }
 
+
+
 }
