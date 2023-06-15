@@ -64,17 +64,31 @@ public class Zombie extends ActivityEntity implements Moveable{
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> zombieTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(DudeFull.class, DudeNotFull.class)));
-
+        Optional<Entity> zombieTarget = world.findNearest(this.getPosition(), new ArrayList<>(List.of(House.class)));
+        Optional<Entity> nearestTree = world.findNearest(this.getPosition(), new ArrayList<>(List.of(KillerTree.class)));
+        System.out.println(nearestTree.get().getPosition());
         if (zombieTarget.isPresent()) {
             Point tgtPos = zombieTarget.get().getPosition();
+            if (nearestTree.isPresent()){
+                System.out.println("Checking");
+                if (this.getPosition().adjacent(nearestTree.get().getPosition())) {
+                    System.out.println("Contact");
+                    world.removeEntity(scheduler, this);
+                    scheduler.unscheduleAllEvents(this);
+                    world.removeEntity(scheduler, nearestTree.get());
+                    scheduler.unscheduleAllEvents(nearestTree.get());
+                    while (world.isOccupied(nearestTree.get().getPosition())){
+                        System.out.println("HOUSE");
+                        world.removeEntityAt(nearestTree.get().getPosition());
+                        scheduler.unscheduleAllEvents(nearestTree.get());
+                    }
+                    House house = new House("house", nearestTree.get().getPosition(), imageStore.getImageList("house"), 1);
+                    house.addEntity(world);
 
-
+                }
+            }
             if (this.moveTo(world, zombieTarget.get(), scheduler)) {
-                CrazyDude crazydude = new CrazyDude("crazydude", tgtPos, imageStore.getImageList("crazydude"), .5,.1,0);
-                crazydude.addEntity(world);
-                crazydude.scheduleActions(scheduler, world, imageStore);
-
+                world.removeEntityAt(tgtPos);
             }
         }
 

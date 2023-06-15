@@ -42,10 +42,14 @@ public class CrazyDude extends Dude {
     @Override
     public void executeActivity( WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> fullTarget = world.findNearest( this.getPosition(), new ArrayList<>(List.of(Fairy.class)));
+        KillerTree killerTree = new KillerTree("killertree", this.getPosition(), imageStore.getImageList("killertree"), .5,.1);
+        killerTree.addEntity(world);
+        killerTree.scheduleActions(scheduler, world, imageStore);
 
         if (fullTarget.isPresent() && this.moveTo( world, fullTarget.get(), scheduler)) {
-            world.removeEntity(scheduler,this);
-            scheduler.unscheduleAllEvents(this);
+            KillerTree killerTree2 = new KillerTree("killertree", this.getPosition(), imageStore.getImageList("killertree"), .5,.1);
+            killerTree2.addEntity(world);
+            killerTree2.scheduleActions(scheduler, world, imageStore);
         } else {
 
             scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());

@@ -79,6 +79,15 @@ public final class VirtualWorld extends PApplet {
         newEntity.addEntity(world);
         newEntity.scheduleActions(scheduler, world, imageStore);
         world.setBackgroundCell(pressed, new Background("ZBackground", imageStore.getImageList("ZCentroid")));
+        Optional<Entity> crazyTarget = world.findNearest(newEntity.getPosition(), new ArrayList<>(List.of(DudeFull.class, DudeNotFull.class)));
+        if (crazyTarget.isPresent()) {
+            Point crazyPos = crazyTarget.get().getPosition();
+            world.removeEntityAt(crazyPos);
+            scheduler.unscheduleAllEvents(crazyTarget.get());
+            CrazyDude crazydude = new CrazyDude("crazydude", crazyPos, imageStore.getImageList("crazydude"), 1,.1,0);
+            crazydude.addEntity(world);
+            crazydude.scheduleActions(scheduler, world, imageStore);
+        }
         for(Point p: PathingStrategy.NEIGHBORS_POINTS.apply(pressed).toList()){
             world.setBackgroundCell(p, new Background("ZBackground", imageStore.getImageList("ZBackground")));
             if(world.isOccupied(p) ){
