@@ -75,15 +75,11 @@ public class Zombie extends ActivityEntity implements Moveable{
                     System.out.println("Contact");
                     world.removeEntity(scheduler, this);
                     scheduler.unscheduleAllEvents(this);
-                    world.removeEntity(scheduler, nearestTree.get());
-                    scheduler.unscheduleAllEvents(nearestTree.get());
                     while (world.isOccupied(nearestTree.get().getPosition())){
                         System.out.println("HOUSE");
                         world.removeEntityAt(nearestTree.get().getPosition());
                         scheduler.unscheduleAllEvents(nearestTree.get());
                     }
-                    House house = new House("house", nearestTree.get().getPosition(), imageStore.getImageList("house"), 1);
-                    house.addEntity(world);
 
                 }
             }
